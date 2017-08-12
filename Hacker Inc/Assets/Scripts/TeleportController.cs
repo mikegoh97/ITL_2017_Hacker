@@ -27,8 +27,6 @@ public class TeleportController : MonoBehaviour {
 
         DrawLine(this.transform.position, this.transform.position + this.transform.forward * maxLineDistance, Color.red, 0.01f);
 
-        print(playSpace.transform.position - player.transform.position);
-
         if (Physics.Raycast(ray, out hitInfo))
         {
             if (triggerButtonDown && hitInfo.collider.tag == "Floor")

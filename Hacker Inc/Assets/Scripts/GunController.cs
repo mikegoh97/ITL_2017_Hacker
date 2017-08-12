@@ -16,7 +16,7 @@ public class GunController : MonoBehaviour {
 	void Update() {
 		triggerButtonDown = controller.GetPressDown (triggerButton);
 
-        Ray ray = new Ray (this.transform.position, this.transform.forward);
+        Ray ray = new Ray (this.transform.position, -this.transform.up);
 		RaycastHit hitInfo;
 
 		if (triggerButtonDown && Physics.Raycast(ray, out hitInfo)) {
