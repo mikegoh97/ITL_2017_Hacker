@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hacker Inc V.3", "Hacker Inc V.3.csproj", "{599F60A0-A20C-A349-B94F-2C84406AC078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hacker Inc V.3.Editor", "Hacker Inc V.3.Editor.csproj", "{335F0559-92A8-BD92-DA53-A3EF8B56D278}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{599F60A0-A20C-A349-B94F-2C84406AC078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599F60A0-A20C-A349-B94F-2C84406AC078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599F60A0-A20C-A349-B94F-2C84406AC078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599F60A0-A20C-A349-B94F-2C84406AC078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335F0559-92A8-BD92-DA53-A3EF8B56D278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335F0559-92A8-BD92-DA53-A3EF8B56D278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335F0559-92A8-BD92-DA53-A3EF8B56D278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335F0559-92A8-BD92-DA53-A3EF8B56D278}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
