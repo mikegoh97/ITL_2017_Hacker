@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VR;
+using System;       // to allow for error catching
 
 public class GetInput : MonoBehaviour {
 	// Update is called once per frame
@@ -17,7 +18,7 @@ public class GetInput : MonoBehaviour {
 
     void Start()
     {
-		characters.Add ("\n" + startingLine);
+		characters.Add ("\n" + startingLine);                                   //starts the opening line with startingLine
         this.GetComponent<TextMesh>().text = characters[0]; 					// prints :// on the Screen object
     }
 
@@ -47,66 +48,113 @@ public class GetInput : MonoBehaviour {
 		}
 	}
 
-	void executeCommand()
-	{
-		characters.Clear ();													// clear characters for new line
+    void executeCommand()
+    {
+        characters.Clear();                                                 // clear characters for new line
 
-		if (startingLine.Contains ("Doors")) {
-			doors ();
-			return;
-		}
+        if (newLine.Contains("clear"))
+        {
+            endLine();
+            output = "";
+            return;
+        }
 
-		if (newLine.Contains ("ls")) {
-			if (listOfDoors.getSize() != 0)										// checks if there are doors in DoorList
-				characters.Add ("\n\nDoors\n");									// if yes, prints that Doors exist
-		}
+        if (startingLine.Contains("Doors"))
+        {
+            doors();
+            return;
+        }
 
-		if (newLine.Contains ("cd")) {
-			if (newLine.Contains ("Doors"))										// if user wants to go into Doors
-				startingLine = startingLine + "Doors/ ";						// add Doors/ to the startingLine
-		}
+        if (newLine.Contains("ls"))
+           {
+               if (listOfDoors.getSize() != 0)                                     // checks if there are doors in DoorList
+                  newLine = newLine + "\n\nDoors\n";                              // if yes, prints that Doors exist
+           }
+        if (newLine.Contains("cd"))
+           {
+               if (newLine.Contains("Doors"))                                      // if user wants to go into Doors
+                   startingLine = startingLine + "Doors/ ";                        // add Doors/ to the startingLine
+           }
 
-		endLine ();
+
+        if (newLine.Contains("help"))
+              help();
+
+        endLine();
     }
 
-	void doors()
-	{
-		if (newLine.Contains ("ls")) {
-			characters.Add (listOfDoors.getNames ());							// gets all the names of doors in DoorList
-		} 
-		else 
-		{
-			int index = int.Parse (newLine.Substring (newLine.Length-1));		// gets the Door number
-			door = listOfDoors.getDoor (index-1);									// gets the Door from DoorList
+    void doors()
+    {
+        if (newLine.Contains("ls"))
+        {
+            characters.Add("\n\nDoors available:" + listOfDoors.getNames());                         // gets all the names of doors in DoorList
+        }
 
-			if (newLine.Contains ("open Door")) {
-				
-				if (!door.doorMoved) { 												//checks if the door is open
-					StartCoroutine (door.Move ()); 									// sends a signal to Move() in Door script
-					//doorOpen = true;
-					//Debug.Log("Open");
-					characters.Add ("\n\n\t*** DOOR OPENED *** \n");
-				}
-			}
+        if (newLine.Contains("clear"))
+        {
+            endLine();
+            output = "";
+            return;
+        }
 
-			if (newLine.Contains ("close Door")) {
-				if (door.doorMoved) {
-					StartCoroutine (door.Move ()); 									// close door
+        if (newLine.Contains("help"))
+            help();
+        else
+        {
+            try
+            {
+                int index = int.Parse(newLine.Substring(newLine.Length - 1));       // gets the Door number
+                door = listOfDoors.getDoor(index - 1);                                  // gets the Door from DoorList
+            }
+            catch (FormatException)
+            {
+                characters.Add("\n\nERROR: Please enter name of door\n");
+                endLine();
+                return;
+            }
 
-					//doorOpen = false;
-					//Debug.Log("Close");
-					characters.Add ("\n\n\t*** DOOR CLOSED *** \n");
-				}
-			}
-		}
+            if (newLine.Contains("open Door"))
+            {
 
-		endLine ();
-	}
+                if (!door.doorMoved)
+                {                                               //checks if the door is open
+                    StartCoroutine(door.Move());                                    // sends a signal to Move() in Door script
+                                                                                    //doorOpen = true;
+                                                                                    //Debug.Log("Open");
+                    characters.Add("\n\n\t*** DOOR OPENED *** \n");
+                }
+            }
 
-	void endLine(){
+            if (newLine.Contains("close Door"))
+            {
+                if (door.doorMoved)
+                {
+                    StartCoroutine(door.Move());                                    // close door
+
+                    //doorOpen = false;
+                    //Debug.Log("Close");
+                    characters.Add("\n\n\t*** DOOR CLOSED *** \n");
+                }
+            }
+        }
+
+        endLine();
+    }
+
+    void endLine(){
 		output = string.Concat (output, newLine);								// adds the previous line input to output so that it does not get deleted
 		characters.Add("\n" + startingLine);												// start new line with ://
 	}
+
+    void help()
+    {
+        characters.Add("\n\nWelcome. Here are the list of commands you can try: \n" +
+            "\tls: list out folders/files available\n"+
+            "\tcd: go to a folder\n"+
+            "\tclear: clears the screen\n"+
+            "\topen/close: actions that can be done on a file\n" +
+            "\nNow clear your screen to continue\n");
+    }
 }
 
 /*

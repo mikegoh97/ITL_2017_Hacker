@@ -11,7 +11,7 @@ public class DoorList : MonoBehaviour {
 	}
 
 	public string getNames(){
-		string names = "\n\n";
+		string names = "\n";
 
 		if (doors.Length != 0) {
 			foreach (GameObject door in doors) {
